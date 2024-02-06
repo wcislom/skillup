@@ -1,14 +1,16 @@
-﻿using BookStore.Infrastructure.QueryHandlers;
+﻿using BookStore.Infrastructure.DAL;
+using BookStore.Infrastructure.QueryHandlers;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BookStore.Infrastructure
+namespace BookStore.Infrastructure;
+
+public static class Extensions
 {
-    public static class Extensions
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services)
-        {
-            services.AddQueries();
-            return services;
-        }
+        services.AddQueries();
+        services.AddDbContexts(configuration);
+        return services;
     }
 }
