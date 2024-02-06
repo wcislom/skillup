@@ -12,6 +12,12 @@ services:
       - type: volume
         source: data-volume
         target: /var/opt/mssql
-   
+    networks:
+      - skillup-network
+
 volumes:
   data-volume:
+
+networks:
+  skillup-network:
+      driver: bridge
