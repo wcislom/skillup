@@ -14,10 +14,26 @@ services:
         target: /var/opt/mssql
     networks:
       - skillup-network
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "8080:80"
+      - "5341:5341"
+    volumes:
+      - type: volume
+        source: logs-volume
+        target: /data
+    networks:
+      - skillup-network
 
 volumes:
   data-volume:
+  logs-volume:
 
 networks:
   skillup-network:
-      driver: bridge
+    driver: bridge
+    name: skillup-network
