@@ -9,11 +9,6 @@ namespace BookStore.Infrastructure.QueryHandlers;
 
 public class GetBooksHandler(BookstoreDbContext dbContext) : IQueryHandler<GetBooks, IEnumerable<BookDto>>
 {
-    private static readonly string[] Titles = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
     private readonly BookstoreDbContext _dbContext = dbContext;
 
     public async Task<IEnumerable<BookDto>> HandleAsync(GetBooks query)
