@@ -1,8 +1,8 @@
 ﻿namespace BookStore.Core;
 
-public class Author(string firstName, string lastName)
+public class Author(int id, string firstName, string lastName)
 {
-    public int AuthorId { get; private set; }
+    public int Id { get; private set; } = id;
 
     public string FirstName { get; private set; } = firstName;
 
