@@ -1,7 +1,9 @@
+using BookStore.Application.Commands;
 using BookStore.Application.Core;
 using BookStore.Application.Queries;
 using BookStore.Application.Queries.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Abstractions.CQRS;
 
 namespace BookStore.Api.Controllers;
 
@@ -11,17 +13,31 @@ public class BooksController : ControllerBase
 {
     private readonly ILogger<BooksController> _logger;
     private readonly IQueryHandler<GetBooks, IEnumerable<BookDto>> _queryHandler;
+    private readonly ICommandHandler<CreateBook> _createBook;
 
-    public BooksController(ILogger<BooksController> logger, IQueryHandler<GetBooks, IEnumerable<BookDto>> queryHandler)
+    public BooksController(ILogger<BooksController> logger, IQueryHandler<GetBooks,
+        IEnumerable<BookDto>> queryHandler,
+        ICommandHandler<CreateBook> createBook)
     {
         _logger = logger;
         _queryHandler = queryHandler;
+        _createBook = createBook;
     }
 
     [HttpGet(Name = "GetBooksWithAuthors")]
-    public async Task<IEnumerable<BookDto>> Get()
+    public async Task<IActionResult> Get()
     {
         _logger.LogInformation("Getting books with authors");
-        return await _queryHandler.HandleAsync(new GetBooks());
+        return Ok(await _queryHandler.HandleAsync(new GetBooks()));
+    }
+
+    [HttpPost(Name = "CreateBook")]
+    public async Task<IActionResult> CreateBook([FromBody] CreateBook command)
+    {
+        _logger.LogInformation("Creating a new book");
+        await _createBook.Handle(command);
+        return Created("api", command);
     }
 }
+
+

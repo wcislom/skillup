@@ -1,6 +1,15 @@
 @BookStore.Api_HostAddress = http://localhost:5006
 
-GET {{BookStore.Api_HostAddress}}/weatherforecast/
+GET {{BookStore.Api_HostAddress}}/books/
 Accept: application/json
 
 ###
+
+POST {{BookStore.Api_HostAddress}}/books/
+Accept: */*
+Content-Type: application/json
+
+
+{
+    "Id": "1"
+}

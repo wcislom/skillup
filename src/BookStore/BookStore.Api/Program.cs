@@ -35,10 +35,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapFallback(context =>
-{
-    context.Response.Redirect("/swagger");
-    return Task.CompletedTask;
-});
 
 app.Run();
