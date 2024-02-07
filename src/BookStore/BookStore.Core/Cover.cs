@@ -2,7 +2,7 @@
 
 public class Cover(string designIdeas, bool digitalOnly)
 {
-    public int CoverId { get; private set; }
+    public int Id { get; private set; }
 
     public string DesignIdeas { get; private set; } = designIdeas;
 

@@ -2,7 +2,7 @@
 
 public class Artist (string firstName, string lastName)
 {
-    public int ArtistId { get; private set; }
+    public int Id { get; private set; }
 
     public string FirstName { get; private set; } = firstName;
 
