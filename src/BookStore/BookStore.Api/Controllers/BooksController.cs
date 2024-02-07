@@ -18,10 +18,10 @@ public class BooksController : ControllerBase
         _queryHandler = queryHandler;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
+    [HttpGet(Name = "GetBooksWithAuthors")]
     public async Task<IEnumerable<BookDto>> Get()
     {
-        _logger.LogInformation("Getting books");
+        _logger.LogInformation("Getting books with authors");
         return await _queryHandler.HandleAsync(new GetBooks());
     }
 }

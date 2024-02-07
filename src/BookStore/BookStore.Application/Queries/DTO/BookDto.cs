@@ -1,10 +1,5 @@
 ﻿namespace BookStore.Application.Queries.DTO;
 
-public class BookDto
+public record BookDto(string Title, decimal BasePrice, string AuthorName)
 {
-    public string? Title { get; set; }
-
-    public decimal BasePrice { get; set; }
-
-    public string AuthorName { get; set; } = string.Empty;
 }
