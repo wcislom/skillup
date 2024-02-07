@@ -6,5 +6,5 @@ public class BookDto
 
     public decimal BasePrice { get; set; }
 
-    public string AuthorName { get; set; }
+    public string AuthorName { get; set; } = string.Empty;
 }

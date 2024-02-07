@@ -10,7 +10,7 @@ public class Cover(string designIdeas, bool digitalOnly)
 
     public List<Artist> Artists { get; private set; } = new();
 
-    public Book Book { get; private set; }
+    public Book? Book { get; private set; }
 
     public int BookId { get; private set; }
 }

@@ -14,4 +14,8 @@
     <ProjectReference Include="..\BookStore.Application\BookStore.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DAL\Interceptors\" />
+  </ItemGroup>
+
 </Project>

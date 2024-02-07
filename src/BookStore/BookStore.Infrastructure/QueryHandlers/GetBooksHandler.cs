@@ -11,10 +11,5 @@ public class GetBooksHandler(BookstoreDbContext dbContext) : IQueryHandler<GetBo
 {
     private readonly BookstoreDbContext _dbContext = dbContext;
 
-    public async Task<IEnumerable<BookDto>> HandleAsync(GetBooks query)
-    {
-        var books = await _dbContext.Books.ToListAsync();
-        return books.Select(b => b.AsDto());
-    }
-
+    public async Task<IEnumerable<BookDto>> HandleAsync(GetBooks query) => await _dbContext.Books.Select(b => b.AsDto()).ToListAsync();
 }
