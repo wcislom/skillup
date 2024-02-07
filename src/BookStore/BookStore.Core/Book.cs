@@ -1,6 +1,6 @@
 namespace BookStore.Core;
 
-public class Book(string title, DateOnly publishDate, decimal basePrice)
+public class Book(string title, DateOnly publishDate, decimal basePrice, Author author)
 {
     public int BookId { get; private set; }
 
@@ -10,7 +10,7 @@ public class Book(string title, DateOnly publishDate, decimal basePrice)
 
     public decimal BasePrice { get; private set; } = basePrice;
 
-    public Author Author { get; private set; }
+    public Author Author { get; private set; } = author;
 
     public int AuthorId { get; private set; }
 

@@ -1,5 +1,6 @@
 using BookStore.Application;
 using BookStore.Infrastructure;
+using BookStore.Infrastructure.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var database = scope.ServiceProvider.GetRequiredService<BookstoreDbContext>().Database;
+    database.EnsureDeleted();
+    database.EnsureCreated();
 }
 
 app.UseHttpsRedirection();
