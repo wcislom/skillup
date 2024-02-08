@@ -10,8 +10,7 @@ internal static class Extensions
     {
         services.AddDbContext<BookstoreDbContext>(optionsBuilder =>
         {
-            optionsBuilder.EnableSensitiveDataLogging()
-            .LogTo(Console.WriteLine)
+            optionsBuilder.EnableSensitiveDataLogging(true)
             .UseSqlServer(configuration.GetConnectionString(nameof(BookstoreDbContext)));
         });
         return services;

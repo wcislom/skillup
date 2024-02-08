@@ -14,9 +14,10 @@
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "books",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
+        "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Development",
+            "ConnectionStrings__BookstoreDbContext": "Server=localhost;Database=Bookstore;User Id=bookstore;Password=bookstore;TrustServerCertificate=true"
+        },
       "dotnetRunMessages": true,
        "applicationUrl": "https://localhost:7253;http://localhost:5006"
     },
