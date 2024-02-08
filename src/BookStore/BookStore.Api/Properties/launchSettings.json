@@ -33,10 +33,11 @@
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
-      "environmentVariables": {
-        "ASPNETCORE_HTTPS_PORTS": "8081",
-        "ASPNETCORE_HTTP_PORTS": "8080"
-      },
+        "environmentVariables": {
+            "ASPNETCORE_HTTPS_PORTS": "8081",
+            "ASPNETCORE_HTTP_PORTS": "8080",
+            "ConnectionStrings__BookstoreDbContext": "Server=localhost;Database=Bookstore;User Id=bookstore;Password=bookstore;TrustServerCertificate=true"
+        },
       "publishAllPorts": true,
       "useSSL": true
     }

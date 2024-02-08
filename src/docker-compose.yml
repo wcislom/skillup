@@ -1,5 +1,20 @@
 version: '3.8'
 services:
+  bookstore:
+    build:
+      context: .
+      dockerfile: BookStore/BookStore.Api/Dockerfile
+    ports:
+      - 8080:8080
+      - 8081:8081
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__BookstoreDbContext=Server=sqlserver;Database=Bookstore;User Id=bookstore;Password=bookstore;TrustServerCertificate=true
+    networks:
+      - skillup-network
+    depends_on:
+      - sqlserver
+      - seq
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
@@ -20,7 +35,7 @@ services:
     environment:
       - ACCEPT_EULA=Y
     ports:
-      - "8080:80"
+      - "5380:80"
       - "5341:5341"
     volumes:
       - type: volume

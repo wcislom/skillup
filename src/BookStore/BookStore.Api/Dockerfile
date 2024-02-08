@@ -9,15 +9,13 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["skillup/src/BookStore.Api/BookStore.Api.csproj", "skillup/src/BookStore.Api/"]
-RUN dotnet restore "./skillup/src/BookStore.Api/./BookStore.Api.csproj"
 COPY . .
-WORKDIR "/src/skillup/src/BookStore.Api"
-RUN dotnet build "./BookStore.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet restore "BookStore/BookStore.Api/BookStore.Api.csproj"
+RUN dotnet build "BookStore/BookStore.Api/BookStore.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./BookStore.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "BookStore/BookStore.Api/BookStore.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
