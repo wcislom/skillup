@@ -17,4 +17,13 @@ public class BookstoreDbContext : DbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(BookstoreDbContext).Assembly);
     }
+
+    public void AddData()
+    {
+
+        var a = new Author("John", "Smith");
+        a.AddBook(new Book("1984", DateOnly.Parse("2020-12-01"), 19.99M));
+        Add(a);
+        SaveChanges();
+    }
 }

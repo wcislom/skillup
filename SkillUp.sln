@@ -12,15 +12,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BookStore", "BookStore", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookStore.Api", "src\BookStore\BookStore.Api\BookStore.Api.csproj", "{AC1B7AE1-2520-4B70-99B8-799FCF37AAF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStore.Core", "src\BookStore\BookStore.Core\BookStore.Core.csproj", "{F3D5D68B-3D4C-4AA5-9740-7DB771F22522}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookStore.Core", "src\BookStore\BookStore.Core\BookStore.Core.csproj", "{F3D5D68B-3D4C-4AA5-9740-7DB771F22522}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStore.Application", "src\BookStore\BookStore.Application\BookStore.Application.csproj", "{8CEDFF9E-9C86-455E-8C69-39D242390C6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookStore.Application", "src\BookStore\BookStore.Application\BookStore.Application.csproj", "{8CEDFF9E-9C86-455E-8C69-39D242390C6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStore.Infrastructure", "src\BookStore\BookStore.Infrastructure\BookStore.Infrastructure.csproj", "{D5A9AF47-82DE-407A-8141-265CE1AA3CC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookStore.Infrastructure", "src\BookStore\BookStore.Infrastructure\BookStore.Infrastructure.csproj", "{D5A9AF47-82DE-407A-8141-265CE1AA3CC0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{683DBC21-9D8D-4FF5-85CD-60D149536793}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Abstractions", "src\Shared\Shared.Abstractions\Shared.Abstractions.csproj", "{9BA24DD9-1C35-4C81-A3D3-05A4FAD4D5C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Abstractions", "src\Shared\Shared.Abstractions\Shared.Abstractions.csproj", "{9BA24DD9-1C35-4C81-A3D3-05A4FAD4D5C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Core", "src\Shared\Shared.Core\Shared.Core.csproj", "{847172F7-096F-4644-A352-B759DAA246E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +50,10 @@ Global
 		{9BA24DD9-1C35-4C81-A3D3-05A4FAD4D5C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BA24DD9-1C35-4C81-A3D3-05A4FAD4D5C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BA24DD9-1C35-4C81-A3D3-05A4FAD4D5C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{847172F7-096F-4644-A352-B759DAA246E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{847172F7-096F-4644-A352-B759DAA246E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{847172F7-096F-4644-A352-B759DAA246E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{847172F7-096F-4644-A352-B759DAA246E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{D5A9AF47-82DE-407A-8141-265CE1AA3CC0} = {6BE82A7A-933A-4F5F-97AA-09AB91563D12}
 		{683DBC21-9D8D-4FF5-85CD-60D149536793} = {4B13620D-A040-4B80-8416-B5DAAC71D0E4}
 		{9BA24DD9-1C35-4C81-A3D3-05A4FAD4D5C1} = {683DBC21-9D8D-4FF5-85CD-60D149536793}
+		{847172F7-096F-4644-A352-B759DAA246E3} = {683DBC21-9D8D-4FF5-85CD-60D149536793}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F8F5CEF4-7382-4355-99E4-EC3E4DAA67DB}

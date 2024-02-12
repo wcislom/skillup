@@ -11,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
+builder.Services.AddProblemDetails();
 
 builder.ConfigureInfrastructure();
 
@@ -25,9 +26,11 @@ if (app.Environment.IsDevelopment())
 
 using (var scope = app.Services.CreateScope())
 {
-    var database = scope.ServiceProvider.GetRequiredService<BookstoreDbContext>().Database;
+    var dbContext = scope.ServiceProvider.GetRequiredService<BookstoreDbContext>();
+    var database = dbContext.Database;
     database.EnsureDeleted();
     database.EnsureCreated();
+    dbContext.AddData();
 }
 
 app.UseHttpsRedirection();
