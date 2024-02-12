@@ -32,10 +32,10 @@ public class BooksController : ControllerBase
     }
 
     [HttpPost(Name = "CreateBook")]
-    public async Task<IActionResult> CreateBook([FromBody] CreateBook command)
+    public async Task<IActionResult> CreateBook([FromBody] CreateBook command, CancellationToken cancellation)
     {
         _logger.LogInformation("Creating a new book");
-        await _createBook.Handle(command);
+        await _createBook.Handle(command, cancellation);
         return Created("api", command);
     }
 }

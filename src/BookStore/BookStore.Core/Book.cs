@@ -2,7 +2,7 @@ namespace BookStore.Core;
 
 public class Book
 {
-    // Author cannot be created by EF Core, so default empty constructor is needed
+    // PublishDate cannot be created by EF Core, so default empty constructor is needed
     protected Book()
     {
         
