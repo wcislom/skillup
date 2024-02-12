@@ -20,10 +20,10 @@ internal class AuthorConfiguration : IEntityTypeConfiguration<Author>
             .HasMaxLength(100);
         builder.HasMany(a => a.Books)
             .WithOne(b => b.Author)
-            .HasForeignKey(b => b.AuthorId)
+            .HasForeignKey("AuthorId")
             .OnDelete(DeleteBehavior.Cascade);
-
-        builder.HasData(new Author(1, "George", "Orwell"));
-        builder.HasData(new Author(2, "Adam", "Smith"));
+        var a = new Author("John", "Smith", 1);
+        a.AddBook(new Book("1984", DateOnly.Parse("2020-12-01"), 19.99M));
+        //builder.HasData(a);
     }
 }

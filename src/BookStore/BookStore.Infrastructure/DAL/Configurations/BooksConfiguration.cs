@@ -21,9 +21,6 @@ internal class BooksConfiguration : IEntityTypeConfiguration<Book>
 
         builder.HasOne(b => b.Author)
             .WithMany(a => a.Books)
-            .HasForeignKey(b => b.AuthorId);
-
-        builder.HasData(new Book(1, "1984", DateOnly.Parse("2020-12-01"), 19.99M, 1),
-            new Book(2, "The Wealth of Nations", DateOnly.Parse("2020-12-01"), 35M, 2));
+            .HasForeignKey("AuthorId");
     }
 }

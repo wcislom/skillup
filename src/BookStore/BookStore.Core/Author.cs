@@ -1,12 +1,19 @@
 ﻿namespace BookStore.Core;
 
-public class Author(int id, string firstName, string lastName)
+public class Author
 {
-    public int Id { get; private set; } = id;
+    public Author(string firstName, string lastName, int id = default)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        Id = id;
+    }
 
-    public string FirstName { get; private set; } = firstName;
+    public int Id { get; private set; }
 
-    public string LastName { get; private set; } = lastName;
+    public string FirstName { get; private set; }
+
+    public string LastName { get; private set; }
 
     public List<Book> Books { get; private set; } = new();
 

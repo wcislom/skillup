@@ -8,13 +8,12 @@ public class Book
         
     }
 
-    public Book(int id, string title, DateOnly publishDate, decimal basePrice, int authorId)
+    public Book(string title, DateOnly publishDate, decimal basePrice, int id = default)
     {
         Id = id;
         Title = title;
         PublishDate = publishDate;
         BasePrice = basePrice;
-        AuthorId = authorId;
     }
 
     public int Id { get; private set; }
@@ -25,9 +24,7 @@ public class Book
 
     public decimal BasePrice { get; private set; }
 
-    public Author? Author { get; private set; }
-
-    public int AuthorId { get; private set; }
+    public Author Author { get; private set; } = default!;
 
     public Cover? Cover { get; private set; }
 }
