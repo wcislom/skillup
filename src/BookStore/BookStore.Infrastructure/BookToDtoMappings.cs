@@ -1,6 +1,6 @@
 ﻿using BookStore.Application.Queries.DTO;
 
-namespace BookStore.Infrastructure.DAL.Mappings;
+namespace BookStore.Infrastructure;
 
 internal static class BookToDtoMappings
 {
@@ -8,6 +8,6 @@ internal static class BookToDtoMappings
     {
         dynamic book = bookObj;
 
-        return new BookDto(book.Title, book.BasePrice, book.AuthorName);
+        return new BookDto(book.Id, book.Title, book.BasePrice, book.AuthorId, book.AuthorName);
     }
 }

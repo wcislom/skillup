@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="DAL\Interceptors\" />
+    <Folder Include="DAL\Mappings\" />
   </ItemGroup>
 
 </Project>

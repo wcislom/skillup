@@ -5,7 +5,7 @@ internal class AuthorDoesNotExistException : Exception
 {
     public int AuthorId;
 
-    public AuthorDoesNotExistException(int authorId) : base("Author {authorId} does not exists")
+    public AuthorDoesNotExistException(int authorId) : base($"Author {authorId} does not exists")
     {
         AuthorId = authorId;
     }

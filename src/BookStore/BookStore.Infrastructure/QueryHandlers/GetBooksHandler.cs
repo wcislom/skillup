@@ -2,7 +2,6 @@
 using BookStore.Application.Queries;
 using BookStore.Application.Queries.DTO;
 using BookStore.Infrastructure.DAL;
-using BookStore.Infrastructure.DAL.Mappings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
@@ -22,7 +21,7 @@ public class GetBooksHandler(BookstoreDbContext dbContext, ILogger<GetBooksHandl
         var books = await _dbContext.Books
            .AsNoTracking()
            .Include(b => b.Author)
-           .Select(b => new { b.Title, b.BasePrice, AuthorName = $"{b.Author.FirstName} {b.Author.LastName}" }) // Less data to transfer
+           .Select(b => new {b.Id, b.Title, b.BasePrice, AuthorName = $"{b.Author.FirstName} {b.Author.LastName}", AuthorId = b.Author.Id }) // Less data to transfer
            .ToListAsync();
         sw.Stop();
         _logger.LogDebug("GetBooksHandler took {ElapsedMilliseconds}ms", sw.ElapsedMilliseconds);
