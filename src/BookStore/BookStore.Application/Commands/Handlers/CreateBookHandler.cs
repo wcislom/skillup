@@ -1,4 +1,4 @@
-﻿using BookStore.Application.Exceptions;
+﻿using BookStore.Core.Exceptions;
 using BookStore.Core;
 using BookStore.Core.Repositories;
 using Shared.Abstractions.CQRS;
