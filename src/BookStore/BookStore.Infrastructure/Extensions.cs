@@ -46,7 +46,6 @@ public static class Extensions
     public static IHostApplicationBuilder ConfigureInfrastructure(this IHostApplicationBuilder builder)
     {
         builder.Services.AddInfrastructure(builder.Configuration);
-        builder.Logging.AddSeq();
         return builder;
     }
 }
