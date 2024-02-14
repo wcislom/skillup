@@ -1,7 +1,7 @@
+using BookStore.Api.ExceptionHandlers;
 using BookStore.Application;
 using BookStore.Infrastructure;
 using BookStore.Infrastructure.DAL;
-using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,15 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
-builder.Services.AddProblemDetails(options =>
-{
-    options.CustomizeProblemDetails = (ctx) =>
-    {
-        
-        ctx.ProblemDetails.Title = builder.Environment.IsDevelopment() ? ctx.ProblemDetails.Title : "An error occurred";
-        ctx.ProblemDetails.Detail = builder.Environment.IsDevelopment() ? ctx.ProblemDetails.Detail : null;
-    };
-});
+builder.Services.AddExceptionHandler<DomainExceptionHandler>();
+
 
 builder.ConfigureInfrastructure();
 
@@ -31,7 +24,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
+
+app.UseExceptionHandler(opt => { });
 
 using (var scope = app.Services.CreateScope())
 {
@@ -43,9 +39,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 
