@@ -14,6 +14,7 @@ builder.Services.AddApplication();
 builder.Services.AddExceptionHandler<DomainExceptionHandler>();
 builder.ConfigureInfrastructure();
 builder.ConfigureLogging();
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -34,7 +35,7 @@ app.PrepareDatabase();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-
+app.MapHealthChecks("/health").AllowAnonymous();
 
 app.Run();
 

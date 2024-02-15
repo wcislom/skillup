@@ -27,8 +27,11 @@ public class BooksController : ControllerBase
     [HttpGet(Name = "GetBooksWithAuthors")]
     public async Task<IActionResult> Get()
     {
-        _logger.LogInformation("Getting books with authors");
-        return Ok(await _queryHandler.HandleAsync(new GetBooks()));
+        using(_logger.BeginScope("BooksController.Get for user {userId}", User.Identity?.Name))
+        {
+            _logger.LogInformation("Getting books with authors");
+            return Ok(await _queryHandler.HandleAsync(new GetBooks()));
+        }
     }
 
     [HttpPost(Name = "CreateBook")]
