@@ -27,6 +27,7 @@ namespace BookStore.Api.Startup
             });
 
             builder.Logging.AddSeq();
+            builder.Logging.ClearProviders();
         }
 
         public static void UseLogging(this WebApplication app)
