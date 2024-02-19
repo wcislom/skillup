@@ -18,6 +18,7 @@ builder.Services.AddApplication();
 builder.Services.AddExceptionHandler<DomainExceptionHandler>();
 builder.ConfigureInfrastructure();
 builder.ConfigureLogging();
+builder.Services.AddInstrumentation();
 builder.Services.AddHealthChecks();
 builder.Logging.AddSerilog(logger, dispose: true);  
 
@@ -41,6 +42,7 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health").AllowAnonymous();
 //app.UseSerilogRequestLogging();
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
 app.Run();
 
 logger.Write(Serilog.Events.LogEventLevel.Information, "Closing the application");

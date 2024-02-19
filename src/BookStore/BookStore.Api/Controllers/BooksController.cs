@@ -15,7 +15,7 @@ public class BooksController : ControllerBase
     private readonly ILogger<BooksController> _logger;
     private readonly IQueryHandler<GetBooks, IEnumerable<BookDto>> _queryHandler;
     private readonly ICommandHandler<CreateBook> _createBook;
-    private readonly ActivitySource _activitySource;
+    public static readonly ActivitySource ActivitySource = new ActivitySource("SkillUp.BookStore.Controller");
 
     public BooksController(ILogger<BooksController> logger, IQueryHandler<GetBooks,
         IEnumerable<BookDto>> queryHandler,
@@ -24,15 +24,13 @@ public class BooksController : ControllerBase
         _logger = logger;
         _queryHandler = queryHandler;
         _createBook = createBook;
-        _activitySource = new ActivitySource("SkillUp.BookStore.Controller");
-
     }
 
     [HttpGet(Name = "GetBooksWithAuthors")]
     public async Task<IActionResult> Get()
     {
         using(_logger.BeginScope("BooksController.Get for user {userId}", User.Identity?.Name))
-        using(var activity = _activitySource.StartActivity("BrowseBooks"))
+        using(var activity = ActivitySource.StartActivity("BrowseBooks"))
         {
             _logger.LogInformation("Getting books with authors");
             return Ok(await _queryHandler.HandleAsync(new GetBooks()));
