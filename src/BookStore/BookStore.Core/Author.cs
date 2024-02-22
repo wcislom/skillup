@@ -2,18 +2,19 @@
 
 public class Author
 {
+    protected Author()
+    { 
+    }
+
     public Author(string firstName, string lastName, int id = default)
     {
-        FirstName = firstName;
-        LastName = lastName;
+        Name = new PersonName(firstName, lastName); 
         Id = id;
     }
 
     public int Id { get; private set; }
 
-    public string FirstName { get; private set; }
-
-    public string LastName { get; private set; }
+    public PersonName Name { get; private set; } = default!;
 
     public List<Book> Books { get; private set; } = new();
 

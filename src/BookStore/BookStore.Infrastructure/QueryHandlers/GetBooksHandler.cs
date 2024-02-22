@@ -82,7 +82,7 @@ public class GetBooksHandler(BookstoreDbContext dbContext, ILogger<GetBooksHandl
             _dbContext.Books.Add(new Book("New book", new DateOnly(2022, 1, 1), 99.99M));
             _dbContext.Authors
                 .Where(a => a.Id == 1)
-                .ExecuteUpdate(setter => setter.SetProperty(p => p.FirstName, "Carl")); // this is executed immediately
+                .ExecuteUpdate(setter => setter.SetProperty(p => p.Name.FirstName, "Carl")); // this is executed immediately
             _dbContext.SaveChanges();
             transaction.Commit();
         }
