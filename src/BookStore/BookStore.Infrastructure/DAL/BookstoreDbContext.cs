@@ -8,6 +8,21 @@ public class BookstoreDbContext : DbContext
     public BookstoreDbContext(DbContextOptions<BookstoreDbContext> options)
         : base(options)
     {
+        SavingChanges += (sender, args) =>
+        {
+            // before SaveChanges
+            AuditAuthors();
+        };
+
+        SavedChanges += (sender, args) =>
+        {
+            // after SaveChanges
+        };
+
+        SaveChangesFailed += (sender, args) =>
+        {
+            // in catch block
+        };
     }
 
     public DbSet<Book> Books { get; internal set; }
@@ -17,6 +32,20 @@ public class BookstoreDbContext : DbContext
     override protected void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(BookstoreDbContext).Assembly);
+    }
+
+    public override int SaveChanges()
+    {
+        // some logic
+        return base.SaveChanges();
+    }
+
+    private void AuditAuthors()
+    {
+        ChangeTracker.Entries<Author>().ToList().ForEach(e =>
+        {
+            e.Property("LastUpdated").CurrentValue = DateTime.Now;
+        });
     }
 
     public void AddData()

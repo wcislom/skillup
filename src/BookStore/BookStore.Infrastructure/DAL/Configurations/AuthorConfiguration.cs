@@ -18,6 +18,8 @@ internal class AuthorConfiguration : IEntityTypeConfiguration<Author>
         builder.Property(a => a.LastName)
             .IsRequired()
             .HasMaxLength(100);
+        builder.Property<DateTime>("LastUpdated");
+
         builder.HasMany(a => a.Books)
             .WithOne(b => b.Author)
             .HasForeignKey("AuthorId")

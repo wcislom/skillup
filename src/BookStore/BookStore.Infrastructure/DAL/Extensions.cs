@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookStore.Infrastructure.DAL.Interceptors;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,8 +11,9 @@ internal static class Extensions
     {
         services.AddDbContext<BookstoreDbContext>(optionsBuilder =>
         {
-            optionsBuilder.EnableSensitiveDataLogging(false)
-            .UseSqlServer(configuration.GetConnectionString(nameof(BookstoreDbContext)));
+            optionsBuilder.EnableSensitiveDataLogging(true)
+            .UseSqlServer(configuration.GetConnectionString(nameof(BookstoreDbContext))
+           ).AddInterceptors(new SillyEFCoreInterceptor());
         });
         return services;
     }

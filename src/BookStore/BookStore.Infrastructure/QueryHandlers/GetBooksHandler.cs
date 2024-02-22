@@ -1,6 +1,7 @@
 ﻿using BookStore.Application.Core;
 using BookStore.Application.Queries;
 using BookStore.Application.Queries.DTO;
+using BookStore.Core;
 using BookStore.Infrastructure.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -71,6 +72,24 @@ public class GetBooksHandler(BookstoreDbContext dbContext, ILogger<GetBooksHandl
 
         // option 4
         _dbContext.Books.Where(b => b.Id == 1).ExecuteDelete();
+    }
+
+    private void TransactionExample()
+    {
+        using var transaction = _dbContext.Database.BeginTransaction();
+        try
+        {
+            _dbContext.Books.Add(new Book("New book", new DateOnly(2022, 1, 1), 99.99M));
+            _dbContext.Authors
+                .Where(a => a.Id == 1)
+                .ExecuteUpdate(setter => setter.SetProperty(p => p.FirstName, "Carl")); // this is executed immediately
+            _dbContext.SaveChanges();
+            transaction.Commit();
+        }
+        catch (Exception)
+        {
+            transaction.Rollback();
+        }
     }
 }
 
