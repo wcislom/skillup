@@ -19,17 +19,17 @@ public class GetBooksHandler(BookstoreDbContext dbContext, ILogger<GetBooksHandl
         _logger.LogInformation("Getting list of books with authors");
 
         var sw = Stopwatch.StartNew();
-        var books = await _dbContext.Books
+        var books = (await _dbContext.Books
            .AsNoTracking()
            .Include(b => b.Author)
-           .Select(b => new {b.Id, b.Title, b.BasePrice, AuthorName = $"{b.Author.FirstName} {b.Author.LastName}", AuthorId = b.Author.Id }) // Less data to transfer
-           .ToListAsync();
+           .ToListAsync())
+           .Select(b => b.AsDto()); 
         sw.Stop();
 
         AccessChangeTracker();
         _logger.LogDebug("GetBooksHandler took {ElapsedMilliseconds}ms", sw.ElapsedMilliseconds);
 
-        return books.Select(b => b.AsDto());
+        return books;
     }
 
     private void LoadReferencedData()
