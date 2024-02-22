@@ -30,6 +30,8 @@ public class Book
 
     public Cover? Cover { get; private set; }
 
+    public List<string> Tags { get; set; } = new List<string>();
+
     public void UpdatePrice(decimal price)
     {
         if (price <= 0)
@@ -38,5 +40,13 @@ public class Book
         }
 
         BasePrice = price;
+    }
+
+    public void AddTag(string tag)
+    {
+        if (!Tags.Contains(tag))
+        {
+            Tags.Add(tag);
+        }
     }
 }

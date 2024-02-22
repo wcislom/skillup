@@ -51,9 +51,11 @@ public class BookstoreDbContext : DbContext
     public void AddData()
     {
 
-        var a = new Author("John", "Smith");
-        a.AddBook(new Book("1984", DateOnly.Parse("2020-12-01"), 19.99M));
-        Add(a);
+        var author = new Author("John", "Smith");
+        var book = new Book("1984", DateOnly.Parse("2020-12-01"), 19.99M);
+        book.AddTag("dystopian");
+        author.AddBook(book);
+        Add(author);
         SaveChanges();
     }
 }

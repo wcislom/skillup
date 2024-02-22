@@ -7,6 +7,6 @@ internal static class BookToDtoMappings
 {
     public static BookDto AsDto(this Book book)
     {
-        return new BookDto(book.Id, book.Title, book.BasePrice, book.Author.Id, $"{book.Author.FirstName} + {book.Author.LastName}");
+        return new BookDto(book.Id, book.Title, book.BasePrice, book.Author.Id, $"{book.Author.FirstName} + {book.Author.LastName}", book.Tags);
     }
 }
