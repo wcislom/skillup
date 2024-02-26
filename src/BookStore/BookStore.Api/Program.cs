@@ -2,7 +2,11 @@ using BookStore.Api.ExceptionHandlers;
 using BookStore.Api.Startup;
 using BookStore.Application;
 using BookStore.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Serilog;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,15 +17,57 @@ var logger = new LoggerConfiguration()
 logger.Write(Serilog.Events.LogEventLevel.Information, "Starting up the application");
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        In = ParameterLocation.Header,
+        Scheme = "bearer",
+        BearerFormat = "JWT"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "bearerAuth" }
+            },
+            new string[] {}
+        }
+    });
+});
 builder.Services.AddApplication();
 builder.Services.AddExceptionHandler<DomainExceptionHandler>();
 builder.ConfigureInfrastructure();
 builder.ConfigureLogging();
 builder.Services.AddInstrumentation();
 builder.Services.AddHealthChecks();
-builder.Logging.AddSerilog(logger, dispose: true);  
+builder.Services.AddHttpContextAccessor();
+builder.Logging.AddSerilog(logger, dispose: true);
 
+var tokenValidationParameters = new TokenValidationParameters
+{
+    ValidateIssuer = true,
+    ValidateAudience = true,
+    ValidateLifetime = true,
+    ValidateIssuerSigningKey = true,
+    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+    ValidAudience = builder.Configuration["Jwt:Audience"],
+    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+};
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(o =>
+{
+    o.TokenValidationParameters = tokenValidationParameters;
+});
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -38,6 +84,7 @@ app.UseExceptionHandler(opt => { });
 app.PrepareDatabase();
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health").AllowAnonymous();

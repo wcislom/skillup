@@ -2,6 +2,7 @@ using BookStore.Application.Commands;
 using BookStore.Application.Core;
 using BookStore.Application.Queries;
 using BookStore.Application.Queries.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Abstractions.CQRS;
 using System.Diagnostics;
@@ -9,6 +10,7 @@ using System.Diagnostics;
 namespace BookStore.Api.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("[controller]")]
 public class BooksController : ControllerBase
 {
