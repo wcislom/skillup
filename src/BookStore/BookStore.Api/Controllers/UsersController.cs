@@ -11,7 +11,6 @@ using System.Text;
 namespace BookStore.Api.Controllers;
 
 [Route("[controller]")]
-[Authorize]
 [ApiController]
 public class UsersController : ControllerBase
 {
@@ -25,6 +24,7 @@ public class UsersController : ControllerBase
     }
 
     [AllowAnonymous]
+    [Route("sign-in")]
     [HttpPost]
     public IActionResult LogIn(string username, string password)
     {

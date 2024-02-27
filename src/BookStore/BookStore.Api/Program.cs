@@ -3,6 +3,7 @@ using BookStore.Api.Startup;
 using BookStore.Application;
 using BookStore.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -15,7 +16,7 @@ var logger = new LoggerConfiguration()
     .CreateBootstrapLogger();
 
 logger.Write(Serilog.Events.LogEventLevel.Information, "Starting up the application");
-builder.Services.AddControllers();
+builder.Services.AddControllers(o => o.Filters.Add(new AuthorizeFilter()));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -26,6 +27,14 @@ builder.Services.AddSwaggerGen(c =>
         In = ParameterLocation.Header,
         Scheme = "bearer",
         BearerFormat = "JWT"
+    });
+
+    c.AddSecurityDefinition("cookieAuth", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        In = ParameterLocation.Cookie,
+        Scheme = "cookies"
     });
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {

@@ -10,7 +10,7 @@ using System.Diagnostics;
 namespace BookStore.Api.Controllers;
 
 [ApiController]
-[Authorize]
+[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 [Route("[controller]")]
 public class BooksController : ControllerBase
 {
