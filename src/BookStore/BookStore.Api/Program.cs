@@ -20,30 +20,33 @@ builder.Services.AddControllers(o => o.Filters.Add(new AuthorizeFilter()));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
+    c.AddSecurityDefinition("oAuth", new OpenApiSecurityScheme
     {
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        In = ParameterLocation.Header,
-        Scheme = "bearer",
-        BearerFormat = "JWT"
+        BearerFormat="jwt",
+        Type = SecuritySchemeType.OAuth2,
+        
+        Flows = new OpenApiOAuthFlows
+        {
+            
+            ClientCredentials = new OpenApiOAuthFlow
+            {
+                TokenUrl = new Uri(builder.Configuration["oAuth:TokenUrl"]),
+                Scopes = new Dictionary<string, string>
+                  {
+                      { "bookstore", "BookStore API" }
+                  }
+            }
+        }
     });
 
-    c.AddSecurityDefinition("cookieAuth", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        In = ParameterLocation.Cookie,
-        Scheme = "cookies"
-    });
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
             new OpenApiSecurityScheme
             {
-                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "bearerAuth" }
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oAuth" }
             },
-            new string[] {}
+            new string[] {"bookstore"}
         }
     });
 });
@@ -73,7 +76,8 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(o =>
 {
-    o.TokenValidationParameters = tokenValidationParameters;
+    o.Authority = builder.Configuration["oAuth:Authority"];
+    o.TokenValidationParameters.ValidateAudience = false;
 });
 
 builder.Services.AddAuthorization();
@@ -85,7 +89,11 @@ app.UseLogging();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.OAuthClientId(app.Configuration["oAuth:ClientId"]);
+        c.OAuthClientSecret(app.Configuration["oAuth:ClientSecret"]);
+    });
     app.UseDeveloperExceptionPage();
 }
 
