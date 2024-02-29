@@ -29,6 +29,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpGet(Name = "GetBooksWithAuthors")]
+    [Authorize(Policy = "allow_read")]
     public async Task<IActionResult> Get()
     {
         using(_logger.BeginScope("BooksController.Get for user {userId}", User.Identity?.Name))

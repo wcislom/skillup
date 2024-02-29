@@ -33,7 +33,8 @@ builder.Services.AddSwaggerGen(c =>
                 TokenUrl = new Uri(builder.Configuration["oAuth:TokenUrl"]),
                 Scopes = new Dictionary<string, string>
                   {
-                      { "bookstore", "BookStore API" }
+                      { "bookstore", "BookStore API" },
+                      {"offline_access", "Offline access" }
                   }
             }
         }
@@ -80,7 +81,10 @@ builder.Services.AddAuthentication(options =>
     o.TokenValidationParameters.ValidateAudience = false;
 });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(c =>
+{
+    c.AddPolicy("allow_read", apb => apb.RequireRole("reader"));
+});
 
 var app = builder.Build();
 

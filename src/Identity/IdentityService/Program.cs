@@ -12,7 +12,10 @@ builder.Services.AddSingleton<ICorsPolicyService>((container) =>
         AllowAll = true
     };
 });
-builder.Services.AddIdentityServer()
+builder.Services.AddIdentityServer(o =>
+{
+    o.AccessTokenJwtType = "at+jwt";
+})
           .AddInMemoryApiScopes(Config.ApiScopes)
           .AddInMemoryClients(Config.Clients);
 var app = builder.Build();
